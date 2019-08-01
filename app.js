@@ -27,10 +27,7 @@ const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
 
 const app = express();
-app.use(cors({
-  credentials: true,
-  origin: ['http://localhost:3000']
-}));
+
 // Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -45,6 +42,7 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
       
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -61,6 +59,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000']
+}));
 
 
 const index = require('./routes/index');
