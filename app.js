@@ -74,5 +74,8 @@ app.use('/',apiRoutes)
 const authRoutes = require('./routes/auth-routes');
 app.use('/', authRoutes);
 
+const userCRUD = require('./routes/userCRUD');
+app.use('/', userCRUD);
+
 
 module.exports = app;
