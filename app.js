@@ -13,6 +13,7 @@ const cors = require('cors');
 const session       = require('express-session');
 const passport      = require('passport');
 
+
 require('./config/passportConfig');
 mongoose
   .connect('mongodb://localhost/netflixclone2', {useNewUrlParser: true})

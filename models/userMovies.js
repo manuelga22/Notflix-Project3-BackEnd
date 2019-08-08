@@ -2,7 +2,7 @@ const mongoose =require('mongoose');
 const Schema = mongoose.Schema;
 
 const userMoviesSchema = new Schema({
- movies:{type:Array},
+ movies:{type:String},
  review:{type:String}
 })
 
