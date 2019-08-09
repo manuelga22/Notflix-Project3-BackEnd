@@ -42,6 +42,7 @@ router.post('/addToFavorites/:id/:movieId',(req,res,next)=>{
     res.json(user);
   }).catch((err)=>console.log(err))
 })
+
 function createUserMovie(id,user){
   Movie.create({
    movies : id,
@@ -59,9 +60,11 @@ router.post('/deleteFromFavorites/:userID/:movieID',(req,res,next)=>{
   .then((user)=>{
     user.favorites.pull(req.params.movieID)
     user.save()
-    .then((res)=>console.log(res))
+    .then((response)=>console.log(response))
+
     Movie.findByIdAndDelete(req.params.movieID)
-    .then(()=>{
+    .then((response)=>{
+      res.json({response:response})
       console.log("movie deleted")
     }).catch((err)=>console.log(err))
 

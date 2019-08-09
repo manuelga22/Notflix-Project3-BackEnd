@@ -16,7 +16,7 @@ const passport      = require('passport');
 
 require('./config/passportConfig');
 mongoose
-  .connect('mongodb://localhost/netflixclone2', {useNewUrlParser: true})
+  .connect('mongodb://localhost/netflixclone2', {useNewUrlParser: true, useFindAndModify: false})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -77,6 +77,9 @@ app.use('/', authRoutes);
 
 const userCRUD = require('./routes/userCRUD');
 app.use('/', userCRUD);
+
+const ReviewCRUD =require("./routes/notesCRUD")
+app.use("/", ReviewCRUD);
 
 
 module.exports = app;

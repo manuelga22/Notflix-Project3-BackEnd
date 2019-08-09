@@ -117,7 +117,10 @@ router.post("/logout", (req, res, next) => {
 router.get("/getcurrentuser", (req, res, next) => {
   if (req.user) {
     console.log(req.user);
-    res.status(200).json(req.user);
+    User.findById(req.user._id).populate('favorites')
+    .then((theUser)=>{
+      res.json(theUser)
+    })
     return;
   }
   res.status(403).json({ message: "Unauthorized" });
