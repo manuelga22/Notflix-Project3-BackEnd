@@ -6,21 +6,21 @@ const User = require('../models/userModel');
 const Movie = require('../models/userMovies');
 
 
-router.post('/user/edit/:id', uploadCloud.single('photo'), (req, res, next)=>{
-
-  let theUpdate = {
-    nickName: req.body.nickName,
-    username: req.body.username
-  }
+router.post('/user/edit/:id', uploadCloud.single('imageUrl'), (req, res, next)=>{
+let image;
+  let theUpdate = {}
+  theUpdate.nickName= req.body.nickName,
+  theUpdate.username= req.body.username
   if(req.file){
-    theUpdate.image = req.file.url
+    theUpdate.image = req.file.url;
   }
+  
   User.findByIdAndUpdate(req.params.id, theUpdate)
   .then((response)=>{
       res.json(response)
   })
   .catch((err)=>{
-      next(err);
+      res.json(err);
   })
 })
 

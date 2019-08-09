@@ -16,7 +16,7 @@ const passport      = require('passport');
 
 require('./config/passportConfig');
 mongoose
-  .connect('mongodb://localhost/netflixclone2', {useNewUrlParser: true, useFindAndModify: false})
+  .connect(`${process.env.MONGODB_URI}`, {useNewUrlParser: true, useFindAndModify: false})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -81,5 +81,8 @@ app.use('/', userCRUD);
 const ReviewCRUD =require("./routes/notesCRUD")
 app.use("/", ReviewCRUD);
 
+app.get((req, res, next) => {
+  res.sendFile(__dirname, '/public/index.html')
+})
 
 module.exports = app;
