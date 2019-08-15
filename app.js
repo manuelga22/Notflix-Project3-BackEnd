@@ -67,19 +67,19 @@ app.use(cors({
 
 
 const index = require('./routes/index');
-app.use('/route', index);
+app.use('/api/index', index);
 
 const apiRoutes = require('./routes/movieApiRoutes')
-app.use('/route',apiRoutes)
+app.use('/api/movieApi',apiRoutes)
 
 const authRoutes = require('./routes/auth-routes');
-app.use('/route', authRoutes);
+app.use('/api/auth', authRoutes);
 
 const userCRUD = require('./routes/userCRUD');
-app.use('/route', userCRUD);
+app.use('/api/user', userCRUD);
 
 const ReviewCRUD =require("./routes/notesCRUD")
-app.use("/route", ReviewCRUD);
+app.use("/api/notes", ReviewCRUD);
 
 app.get((req, res, next) => {
   res.sendFile(__dirname, '/public/index.html')

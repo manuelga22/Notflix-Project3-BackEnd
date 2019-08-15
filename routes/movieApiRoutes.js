@@ -57,11 +57,6 @@ router.get("/getIdOfmovie/:movieId", (req, res, next) => {
 });
 
 
-// router.get("/movieInfo/:id",(req,res,next)=>{
-//   axios.get(`https://yts.lt/api/v2/movie_details.json?movie_id=${req.params.id}`)
-//   .then(movieInfo =>{
-//     res.jason({movieInfo: movieInfo.data})
-//   }).catch(err=> console.log(err))
-// })
+
 
 module.exports = router;
