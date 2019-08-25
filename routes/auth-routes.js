@@ -7,6 +7,9 @@ const uploadCloud = require("../config/cloudinaryConfig");
 // require the user model !!!!
 const User = require("../models/userModel");
 
+//setting up automated emails
+const nodemailer = require("nodemailer");
+
 router.post("/signup", uploadCloud.single("image"), (req, res, next) => {
   let newImage;
 
@@ -16,7 +19,6 @@ router.post("/signup", uploadCloud.single("image"), (req, res, next) => {
     newImage =
       "https://s3.narvii.com/image/np55bjfcsd2xnhuizfjiox2d3vzkmlzw_hq.jpg";
   }
-
   console.log("req.body", req.body);
   const userNameVar = req.body.username;
   const password = req.body.password;
@@ -37,12 +39,10 @@ router.post("/signup", uploadCloud.single("image"), (req, res, next) => {
     console.log(
       "Please make your password at least 8 characters long for security purposes."
     );
-    res
-      .status(400)
-      .json({
-        message:
-          "Please make your password at least 8 characters long for security purposes."
-      });
+    res.status(400).json({
+      message:
+        "Please make your password at least 8 characters long for security purposes."
+    });
     return;
   }
   User.findOne({ username: userNameVar }, (err, foundUser) => {
@@ -82,6 +82,11 @@ router.post("/signup", uploadCloud.single("image"), (req, res, next) => {
       });
     });
   });
+  const email= `
+  <h5>Welcome ${nickName}</h5>
+  <p>Enjoy Notflix and check out my other projects</p>
+  `
+  sendAutomatedEmail(userNameVar,email);
 });
 
 router.post("/login", (req, res, next) => {
@@ -117,12 +122,36 @@ router.post("/logout", (req, res, next) => {
 router.get("/getcurrentuser", (req, res, next) => {
   if (req.user) {
     console.log(req.user);
-    User.findById(req.user._id).populate('favorites')
-    .then((theUser)=>{
-      res.json(theUser)
-    })
+    User.findById(req.user._id)
+      .populate("favorites")
+      .then(theUser => {
+        res.json(theUser);
+      });
     return;
   }
   res.status(403).json({ message: "Unauthorized" });
 });
+
+function sendAutomatedEmail(email, message) {
+  console.log("sending email");
+  async function sendEmail() {
+    let testAccount = await nodemailer.createTestAccount();
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'manuelisaacgarcia@gmail.com', // generated ethereal user
+        pass: '27605702'// generated ethereal password
+      }
+    });
+    let info = await transporter.sendMail({
+      from:  "manuelisaacgarcia@gmail.com", // sender address
+      to: email, // list of receivers
+      subject: "Welcome to Notflix ✔", // Subject line
+      html: message // html body
+    });
+  }
+
+  sendEmail().catch(console.error);
+}
 module.exports = router;
