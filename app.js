@@ -82,7 +82,7 @@ const ReviewCRUD =require("./routes/notesCRUD")
 app.use("/api/notes", ReviewCRUD);
 
 app.get((req, res, next) => {
-  res.sendFile(__dirname,"../public/index.html")
+  res.sendFile(__dirname+"./public/index.html")
 })
 
 module.exports = app;
