@@ -65,6 +65,7 @@ app.use(cors({
   origin: ['http://localhost:3000']
 }));
 
+app.use(express.static(__dirname + '/public'))
 
 const index = require('./routes/index');
 app.use('/api/index', index);
@@ -81,8 +82,8 @@ app.use('/api/user', userCRUD);
 const ReviewCRUD =require("./routes/notesCRUD")
 app.use("/api/notes", ReviewCRUD);
 
-app.get("*", (req, res, next) => {
-  res.sendFile(__dirname+"./public/index.html")
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 })
 
 module.exports = app;
