@@ -11,7 +11,10 @@ router.get("/getMovies", (req, res, next) => {
     .then(response => {
       res.json({ movies: response.data });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      res.json({ movies: response.data });
+      console.log(err)
+      });
   console.log("error");
 });
 
@@ -28,6 +31,10 @@ router.get("/movieInfo/:id", (req, res, next) => {
     .get(`http://tv-v2.api-fetch.website/movie/${req.params.id}`)
     .then(movieInfo => {
       res.json({ movieInfo: movieInfo.data });
+    })
+    .catch(err=>{
+      console.log(err);
+      res.json({ movieInfo: movieInfo.data });
     });
 });
 
@@ -36,6 +43,9 @@ router.get("/search/:name", (req, res, next) => {
     .get(`https://tv-v2.api-fetch.website/movies/1?keywords=${req.params.name}`)
     .then(movie => {
       res.json({ movie: movie.data });
+    }).catch(err=>{
+      res.json({ movie: movie.data });
+      console.log(err);
     });
 });
 
@@ -45,6 +55,9 @@ router.get("/getInfoOfmovie/:movieId", (req, res, next) => {
     .then(movie => {
       console.log(movie.data);
       res.json({ movie: movie.data });
+    }).catch(err=>{
+      console.log(err);
+      res.json({ movie: movie.data });
     });
 });
 
@@ -53,6 +66,10 @@ router.get("/getIdOfmovie/:movieId", (req, res, next) => {
     .then(movie => {
     console.log(movie.movies);
     res.json(movie.movies);
+  })
+  .catch(err=>{
+    res.json(movie.movies);
+    console.log(err);
   });
 });
 
