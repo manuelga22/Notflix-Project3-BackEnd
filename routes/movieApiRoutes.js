@@ -3,6 +3,9 @@ const router = express.Router();
 const axios = require("axios");
 const User = require("../models/userModel");
 const Movie = require("../models/userMovies");
+
+
+
 // const downloat = require("downloat");
 
 router.get("/getMovies", (req, res, next) => {
@@ -49,6 +52,7 @@ router.get("/search/:name", (req, res, next) => {
     });
 });
 
+
 router.get("/getInfoOfmovie/:movieId", (req, res, next) => {
   axios
     .get(`https://tv-v2.api-fetch.website/movie/${req.params.movieId}`)
@@ -60,6 +64,7 @@ router.get("/getInfoOfmovie/:movieId", (req, res, next) => {
       res.json({ movie: movie.data });
     });
 });
+
 
 router.get("/getIdOfmovie/:movieId", (req, res, next) => {
   Movie.findById(req.params.movieId)
